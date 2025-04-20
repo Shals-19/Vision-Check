@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Diagnosis Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            height: 50vh;
+            padding: 20px;
+            border: solid;
+            border-color: black;
+            background-color: rgba(208, 225, 244, 0.6); /* Semi-transparent black background */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .result {
+            color: black;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </nav>
+    <div class="container">
+        <p class="result">Diagnosis: {{ symptom }}</p>
+        <a href="/reset" class="button">Start Over</a>
+    </div>
+</body>
+</html>

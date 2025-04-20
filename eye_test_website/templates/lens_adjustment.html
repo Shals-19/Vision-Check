@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lens Adjustment Test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #lens-adjustment-test {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .lens-adjustment-controls {
+            margin: 20px 0;
+        }
+
+        .slider {
+            width: 70%;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #a4c7fb;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .next-button:hover {
+            background-color: #76a0e7;
+        }
+
+        .results-container {
+        max-width: 600px;
+        text-align: center;
+        margin: auto; /* Center horizontally */
+        padding: 20px;
+        border: 2px solid #7a90f3;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        }
+        
+        .results-container h2 {
+            color: #81b3f0;
+        }
+
+        .results-container p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </nav>
+
+    <main>
+        <div id="lens-adjustment-test" style="display: block;">
+            <h2>Lens Adjustment Test</h2>
+            <p>Adjust the lens until the image is clear.</p>
+            <img id="plate-image" src="{{ url_for('static', filename='images/lens_test.jpg') }}" alt="Vision Test Plate">
+            <div class="lens-adjustment-controls">
+                <input type="range" min="0" max="10" value="0" class="slider" id="blur-slider">
+                <span id="slider-value">0</span>
+            </div>
+            <button class="next-button">Next</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Vision Check. All rights reserved.</p>
+        <p>Disclaimer: This is not a substitute for professional medical advice.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const blurSlider = document.getElementById('blur-slider');
+            const plateImage = document.getElementById('plate-image');
+            const sliderValue = document.getElementById('slider-value');
+
+            if (blurSlider && plateImage && sliderValue) {
+                blurSlider.addEventListener('input', function () {
+                    const blurValue = blurSlider.value;
+                    plateImage.style.filter = `blur(${blurValue}px)`;
+                    sliderValue.textContent = blurValue;
+                });
+
+                document.querySelector('.next-button').addEventListener('click', function () {
+                    const blurValue = blurSlider.value;
+                    showResults({ lensAdjustment: blurValue });
+                });
+            }
+        });
+
+        function showResults(testResults) {
+            const resultsContainer = document.createElement('div');
+            resultsContainer.className = 'results-container';
+            resultsContainer.innerHTML = `
+                <h2>Test Results</h2>
+                <p>Lens Adjustment: ${testResults.lensAdjustment}</p>
+            `;
+
+            const mainElement = document.querySelector('main');
+            mainElement.innerHTML = ''; // Clear the existing content
+            mainElement.appendChild(resultsContainer);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Acuity Test - Vision Check</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .results-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </nav>
+    <div id = "test-container">
+        <h2>
+            Please stay one-arm distance away from the screen.
+        </h2>
+    </div>
+    <div id="test-container">
+        <h2>Visual Acuity Test</h2>
+        <div class="test-content">
+            <div class="letter-display">E</div>
+            <div class="input-section">
+                <input type="text" id="letter-input" placeholder="Enter the letter you see">
+                <button class="next-button" onclick="submitVisualAcuity()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="results-container" class="results-container" style="display: none;">
+        <h3>Test Results</h3>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let currentLetterIndex = 0;
+        const visualAcuityLetters = [
+            { size: '72px', letter: 'E' },
+            { size: '48px', letter: 'F' },
+            { size: '36px', letter: 'P' },
+            { size: '24px', letter: 'T' },
+            { size: '18px', letter: 'O' },
+            { size: '10px', letter: 'A' }
+        ];
+
+        let testResults = {
+            visualAcuity: []
+        };
+
+        // Function to submit the visual acuity answer
+        function submitVisualAcuity() {
+            const input = document.getElementById('letter-input');
+            const answer = input.value.toUpperCase();
+            const currentLetter = visualAcuityLetters[currentLetterIndex];
+
+            // Store the result
+            testResults.visualAcuity.push({
+                letter: currentLetter.letter,
+                answer: answer,
+                correct: answer === currentLetter.letter
+            });
+
+            // Clear input field
+            input.value = '';
+
+            currentLetterIndex++;
+
+            if (currentLetterIndex < visualAcuityLetters.length) {
+                // Update the display with the next letter
+                updateLetterDisplay();
+            } else {
+                // Once all letters are answered, show the results
+                showResults();
+            }
+        }
+
+        // Update the letter display with the next letter
+        function updateLetterDisplay() {
+            const letterDisplay = document.querySelector('.letter-display');
+            const nextLetter = visualAcuityLetters[currentLetterIndex];
+            letterDisplay.style.fontSize = nextLetter.size;
+            letterDisplay.textContent = nextLetter.letter;
+        }
+
+        // Show the final results after the test
+        function showResults() {
+            // Calculate the number of correct answers
+            const correctAnswers = testResults.visualAcuity.filter(result => result.correct).length;
+            const totalQuestions = visualAcuityLetters.length;
+            const percentage = ((correctAnswers / totalQuestions) * 100).toFixed(2); // Calculate percentage
+
+            // Display the results section
+            const resultsContainer = document.getElementById('results-container');
+            const results = document.getElementById('results');
+
+            // Display only the percentage score
+            const visualAcuityHTML = `
+                <h4>Visual Acuity Score: ${correctAnswers} out of ${totalQuestions} (${percentage}%)</h4>
+            `;
+
+            // Show the results and hide the test
+            resultsContainer.style.display = 'block';
+            results.innerHTML = visualAcuityHTML;
+            document.getElementById('test-container').style.display = 'none';
+        }
+
+        // Initialize the first letter
+        updateLetterDisplay();
+
+        // Add event listener to the input field to submit when Enter key is pressed
+        document.getElementById('letter-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                submitVisualAcuity();  // Trigger the submit function when Enter is pressed
+            }
+        });
+    </script>
+</body>
+</html>

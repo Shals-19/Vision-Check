@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Check - Online Eye Test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}" class="active">Home</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Welcome to Vision Check</h1>
+        <p>Your online solution for eye tests</p>
+    </header> 
+
+    <main>
+        <!-- <section class="distance-check">
+            <h2>Check Your Distance from the Screen</h2>
+            <div id="camera">
+                <a href="{{ url_for('distance') }}" class="button">Measure Distance</a>
+            </div>
+        </section> -->
+        <section class="features">
+            <h2>Our Test Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <a href="{{ url_for('diagnose') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/eye-strength.svg') }}" alt="Eye Strength">
+                        <h3>Eye Condition Detection</h3>
+                        <p>Detect eye diseases or coditions through symptoms displayed.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('distance') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/eye-strength.svg') }}" alt="Eye Strength">
+                        <h3>Measure Distance</h3>
+                        <p>Check you distance from the screen.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('visual_acuity') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/visual-acuity.svg') }}" alt="Visual Acuity">
+                        <h3>Visual Acuity Test</h3>
+                        <p>Measure your ability to see details at various distances</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('color_vision') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/color-vision.svg') }}" alt="Color Vision">
+                        <h3>Color Vision Test</h3>
+                        <p>Check for color vision deficiencies using Ishihara plates</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('astigmatism') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/astigmatism.svg') }}" alt="Astigmatism">
+                        <h3>Astigmatism Test</h3>
+                        <p>Detect visual distortions with pattern recognition</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('lens_adjustment') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/eye-strength.svg') }}" alt="Eye Strength">
+                        <h3>Eye Strength Test</h3>
+                        <p>Assess your eye power with lens adjustment tests</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('screentime') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/eye-strength.svg') }}" alt="Eye Strength">
+                        <h3>Screentime</h3>
+                        <p>Track your daily screen time.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{{ url_for('map') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/eye-strength.svg') }}" alt="Eye Strength">
+                        <h3>Opthamologists near you</h3>
+                        <p>Find eye clinics and eye hospitals near you.</p>
+                    </a>
+                </div>
+                <!-- <div class="feature-card">
+                    <a href="{{ url_for('diagnose') }}" class="feature-link">
+                        <img src="{{ url_for('static', filename='images/eye-strength.svg') }}" alt="Eye Strength">
+                        <h3>AI Chatbot Helper</h3>
+                        <p>Chatbot to help you with any visual issues.</p>
+                    </a>
+                </div> -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Vision Check. All rights reserved.</p>
+        <p>Disclaimer: This is not a substitute for professional medical advice.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

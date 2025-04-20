@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Eye Power Test</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <h1>Eye Power Test</h1>
+        <div id="test-container">
+          <div id="welcome-screen">
+            <p>Welcome to the basic eye power assessment test. This is a simple screening tool and should not replace a professional eye examination.</p>
+            <button onclick="startTest()">Start Test</button>
+          </div>
+          <div id="question-screen" style="display: none;">
+            <div id="question"></div>
+            <div class="options">
+              <button onclick="answer('yes')">Yes</button>
+              <button onclick="answer('no')">No</button>
+            </div>
+          </div>
+          <div id="result-screen" style="display: none;">
+            <h2>Assessment Result</h2>
+            <p id="result-text"></p>
+            <button onclick="restartTest()">Take Test Again</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

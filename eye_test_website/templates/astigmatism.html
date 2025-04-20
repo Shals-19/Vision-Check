@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astigmatism Test - Vision Check</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .option-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #99d9f9;
+            color: black;
+            cursor: pointer;
+            text-align: center;
+            width: 70%;
+        }
+
+        .option-button:hover {
+            background-color: #76cae9;
+        }
+
+        .test-content {
+            text-align: center;
+        }
+
+        #results-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #99d9f9;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        #results-container h3 {
+            color: #4c82af;
+            margin-bottom: 10px;
+        }
+
+        #results-container p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </nav>
+
+    <div id="test-container">
+        <h2>Astigmatism Test</h2>
+        <div class="test-content">
+            <img class="astigmatism-plate" src="{{ url_for('static', filename='images/astigmatism.jpg') }}" alt="Astigmatism Plate">
+            <div class="input-section">
+                <button class="option-button" onclick="submitAstigmatism('clear')">All lines appear equal.</button>
+                <button class="option-button" onclick="submitAstigmatism('blur')">Some lines appear unequal.</button>
+            </div>
+        </div>
+        <div id="results-container" style="display: none;">
+            <h3>Test Result</h3>
+            <p id="astigmatism-result"></p>
+        </div>
+    </div>
+
+    <script>
+        function submitAstigmatism(value) {
+            // Display the results container
+            const resultsContainer = document.getElementById('results-container');
+            const astigmatismResult = document.getElementById('astigmatism-result');
+
+            // Populate the astigmatism result
+            astigmatismResult.textContent = value === 'clear'
+                ? 'You reported that all lines appeared equal- You might not have astigmatism'
+                : 'You reported that some lines appeared unequal- You might have astigmatism.';
+
+            // Show the results container
+            resultsContainer.style.display = 'block';
+
+            // Optionally scroll to the results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

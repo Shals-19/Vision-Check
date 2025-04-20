@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="results-container">
+            <h1>Test Results</h1>
+            <div id="results"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Vision Check. All rights reserved.</p>
+        <p>Disclaimer: This is not a substitute for professional medical advice.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Retrieve and display Visual Acuity Results
+            const visualAcuityResults = urlParams.get('visualAcuityResults');
+            let visualAcuityHTML = '';
+            if (visualAcuityResults) {
+                try {
+                    // Decode and parse the visual acuity results
+                    const parsedResults = JSON.parse(decodeURIComponent(visualAcuityResults));
+                    visualAcuityHTML = '<h3>Visual Acuity Results</h3>';
+                    parsedResults.forEach(result => {
+                        visualAcuityHTML += `
+                            <p>Letter: ${result.letter}, Answer: ${result.answer}, Correct: ${result.correct}</p>
+                        `;
+                    });
+                } catch (error) {
+                    console.error('Error parsing visual acuity results:', error);
+                    visualAcuityHTML = '<p>Error retrieving visual acuity results.</p>';
+                }
+            } else {
+                visualAcuityHTML = '<p>No visual acuity results found.</p>';
+            }
+
+            // Retrieve other test results (you can handle them similarly)
+            const colorVision = urlParams.get('colorVision') || 'N/A';
+            const astigmatism = urlParams.get('astigmatism') || 'N/A';
+            const lensAdjustment = urlParams.get('lensAdjustment') || 'N/A';
+
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = visualAcuityHTML + `
+                <p>Color Vision: ${colorVision}</p>
+                <p>Astigmatism: ${astigmatism}</p>
+                <p>Lens Adjustment: ${lensAdjustment}</p>
+            `;
+        });
+    </script>
+</body>
+</html>

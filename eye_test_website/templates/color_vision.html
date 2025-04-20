@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Vision Test - Vision Check</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .results-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .test-content {
+            text-align: center;
+        }
+        .input-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vision Check</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </nav>
+
+    <div id="test-container">
+        <h2>Color Vision Test</h2>
+        <div class="test-content">
+            <img class="ishihara-plate" id="ishihara-plate" src="/static/images/ishihara1.jpg" alt="Ishihara Plate">
+            <div class="input-section">
+                <input type="number" id="number-input" placeholder="Enter the number you see">
+                <button class="next-button" onclick="submitColorVision()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="results-container" class="results-container" style="display: none;">
+        <h3>Test Results</h3>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let currentPlateIndex = 0;
+        const ishiharaPlates = [
+            { id: 1, number: 16, image: 'ishihara1.jpg' },
+            { id: 2, number: 42, image: 'ishihara2.jpg' },
+            { id: 3, number: 6, image: 'ishihara3.jpg' }
+        ];
+
+        let testResults = {
+            colorVision: []
+        };
+
+        // Function to submit the color vision answer
+        function submitColorVision() {
+            const input = document.getElementById('number-input');
+            const answer = parseInt(input.value);
+            const currentPlate = ishiharaPlates[currentPlateIndex];
+
+            // Store the result for this plate
+            testResults.colorVision.push({
+                plateId: currentPlate.id,
+                correctNumber: currentPlate.number,
+                answer: answer,
+                correct: answer === currentPlate.number
+            });
+
+            // Clear input field
+            input.value = '';
+
+            currentPlateIndex++;
+
+            if (currentPlateIndex < ishiharaPlates.length) {
+                // Update the display with the next plate
+                updatePlateDisplay();
+            } else {
+                // Once all plates are answered, show the results
+                showResults();
+            }
+        }
+
+        // Update the plate display with the next plate
+        function updatePlateDisplay() {
+            const plateImage = document.getElementById('ishihara-plate');
+            const nextPlate = ishiharaPlates[currentPlateIndex];
+            plateImage.src = `/static/images/${nextPlate.image}`;
+        }
+
+        // Show the final results after the test
+        function showResults() {
+            // Calculate the number of correct answers
+            const correctAnswers = testResults.colorVision.filter(result => result.correct).length;
+            const totalQuestions = ishiharaPlates.length;
+            const percentage = ((correctAnswers / totalQuestions) * 100).toFixed(2); // Calculate percentage
+
+            // Display the results section
+            const resultsContainer = document.getElementById('results-container');
+            const results = document.getElementById('results');
+
+            // Display only the percentage score
+            const colorVisionHTML = `
+                <h4>Color Vision Score: ${correctAnswers} out of ${totalQuestions} (${percentage}%)</h4>
+            `;
+
+            // Show the results and hide the test
+            resultsContainer.style.display = 'block';
+            results.innerHTML = colorVisionHTML;
+            document.getElementById('test-container').style.display = 'none';
+        }
+
+        // Add event listener to the input field to submit when Enter key is pressed
+        document.getElementById('number-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                submitColorVision();  // Trigger the submit function when Enter is pressed
+            }
+        });
+
+        // Initialize the first plate
+        updatePlateDisplay();
+    </script>
+</body>
+</html>

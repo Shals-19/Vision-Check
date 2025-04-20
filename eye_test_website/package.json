@@ -1,0 +1,7 @@
+{
+  "name": "eye-test-website",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "python app.py"
+  }
+}
